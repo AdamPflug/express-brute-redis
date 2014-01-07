@@ -1,0 +1,29 @@
+{
+  "name": "express-brute-redis",
+  "version": "0.0.1",
+  "description": "A Redis store for express-brute",
+  "keywords": [
+    "express",
+    "brute",
+    "redis"
+  ],
+  "license": "BSD",
+  "private": false,
+  "scripts": {
+    "test": "node node_modules/jasmine-node/lib/jasmine-node/cli.js --captureExceptions --matchall spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:AdamPflug/express-brute-redis.git"
+  },
+  "devDependencies": {
+    "jasmine-node": "~1.11.0",
+    "proxyquire": "~0.5.0",
+    "async": "~0.2.9"
+  },
+  "dependencies": {
+    "underscore": "~1.5.1",
+    "redis": "~0.10.0",
+    "express-brute": "~0.4.2"
+  }
+}
