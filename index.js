@@ -31,12 +31,16 @@ RedisStore.prototype.set = function (key, value, lifetime, callback) {
 	if (lifetime > 0) {
 		multi.expire(redisKey, lifetime);
 	}
-	multi.exec(function (err, data) {
+	var ok = multi.exec(function (err, data) {
 		typeof callback == 'function' && callback.call(this, null);
 	});
+	if (!ok) {
+		var err = new Error('Failed redis request');
+		typeof callback == 'function' && callback(err, null);
+	}
 };
 RedisStore.prototype.get = function (key, callback) {
-	this.client.get(this.options.prefix+key, function (err, data) {
+	var ok = this.client.get(this.options.prefix+key, function (err, data) {
 		if (err) {
 			typeof callback == 'function' && callback(err, null);
 		} else {
@@ -48,11 +52,19 @@ RedisStore.prototype.get = function (key, callback) {
 			typeof callback == 'function' && callback(err, data);
 		}
 	});
+	if (!ok) {
+		var err = new Error('Failed redis request');
+		typeof callback == 'function' && callback(err, null);
+	}
 };
 RedisStore.prototype.reset = function (key, callback) {
-	this.client.del(this.options.prefix+key, function (err, data) {
+	var ok = this.client.del(this.options.prefix+key, function (err, data) {
 		typeof callback == 'function' && callback.apply(this, arguments);
 	});
+	if (!ok) {
+		var err = new Error('Failed redis request');
+		typeof callback == 'function' && callback(err, null);
+	}
 };
 RedisStore.Redis = Redis;
 RedisStore.defaults = {

@@ -24,6 +24,7 @@ RedisClientMock.prototype.expire = function (key, lifetime, callback) {
 };
 RedisClientMock.prototype.get = function (key, callback) {
 	typeof callback == 'function' && callback(null, this.data[key] && this.data[key].value);
+	return 1;
 };
 RedisClientMock.prototype.del = function (key, callback) {
 	if (this.data[key] && this.data[key].timeout) {
@@ -31,6 +32,7 @@ RedisClientMock.prototype.del = function (key, callback) {
 	}
 	delete this.data[key];
 	typeof callback == 'function' && callback(null);
+	return 1;
 };
 RedisClientMock.prototype.multi = function (key, callback) {
 	return new RedisMultiMock(this);
@@ -75,6 +77,7 @@ RedisMultiMock.prototype = {
 			callback(this.err, this.responses);
 		}, this);
 		setTimeout(_.bind(function () { this.runQueue(); }, this));
+		return 1;
 	},
 	_createCallback: function (callback) {
 		return _.bind(function (err, response) {
