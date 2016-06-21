@@ -17,7 +17,7 @@ var RedisStore = module.exports = function (options) {
 		this.client = RedisStore.Redis.createClient(
 			this.options.port,
 			this.options.host,
-			this.options.redisOptions
+			this.redisOptions
 		);
 	}
 };

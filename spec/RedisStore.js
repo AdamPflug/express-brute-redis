@@ -14,6 +14,12 @@ describe("Express brute redis store", function () {
 		expect(instance).toBeDefined();
 		expect(instance instanceof RedisStore).toBeTruthy();
 	});
+  it('can be instantiated with options', function () {
+    var RedisMockSpy = spyOn(RedisMock, 'createClient');
+    // redefine instance with custom options
+    instance = new RedisStore({prefix: 'test-options', host: '1.0.0.0', port: 111, auth_pass: 'foobared'});
+    expect(RedisMockSpy).toHaveBeenCalledWith(111, '1.0.0.0', {auth_pass: 'foobared'});
+  });
 	it("can set a key and get it back", function () {
 		var curDate = new Date(),
 		    object = {count: 1, lastRequest: curDate, firstRequest: curDate};
